@@ -1,32 +1,25 @@
 <?php
-// GanjiSmart – DB Connection (Hardened for Railway + Vercel)
+// GanjiSmart – DB Connection (Final Railway Config)
 
-// 1. Get credentials from Env Vars (Vercel) or Defaults
 $host = getenv('DB_HOST') ?: 'shuttle.proxy.rlwy.net';
 $user = getenv('DB_USER') ?: 'root';
 $pass = getenv('DB_PASS') ?: 'buxkvoIlogKqjkDEMoFtERKKhMjldCwe';
 $name = getenv('DB_NAME') ?: 'railway';
-$port = (int)(getenv('DB_PORT') ?: 3306); // Default to 3306 if not set
+$port = (int)(getenv('DB_PORT') ?: 53870); // Using your Railway port 53870
 
-// 2. Suppress warnings for a clean UI experience
 mysqli_report(MYSQLI_REPORT_OFF);
-
 $conn = mysqli_init();
-
-// 3. Connect with a short timeout to prevent hanging
 $conn->options(MYSQLI_OPT_CONNECT_TIMEOUT, 5);
 
 @$conn->real_connect($host, $user, $pass, $name, $port);
 
 if ($conn->connect_error) {
-    // If we're on Vercel, return a clean JSON error
     if (getenv('VERCEL')) {
         header('Content-Type: application/json');
         http_response_code(500);
         die(json_encode([
             'error' => 'Partner logic disconnected',
-            'status' => 'waiting_for_db_config',
-            'hint' => 'Chief, check your Vercel variables. Ensure DB_PORT matches Railway.'
+            'hint' => 'Chief, ensure the Railway DB is active and Vercel Env Vars match.'
         ]));
     }
 }
