@@ -1,0 +1,11 @@
+# GanjiSmart GitIgnore
+.DS_Store
+Thumbs.db
+*.log
+.env
+/.vscode
+/.idea
+/tmp
+/vendor
+node_modules
+.vercel

@@ -1,0 +1,17 @@
+{
+  "functions": {
+    "api/*.php": {
+      "runtime": "vercel-php@0.7.2"
+    },
+    "*.php": {
+      "runtime": "vercel-php@0.7.2"
+    }
+  },
+  "routes": [
+    { "src": "/assets/(.*)", "dest": "/assets/$1" },
+    { "src": "/manifest.json", "dest": "/manifest.json" },
+    { "src": "/sw.js", "dest": "/sw.js" },
+    { "src": "/(index|dashboard|finance|goals|opportunities|trades|login|logout|notifications|settings|allocation|analysis)\\.php", "dest": "/$1.php" },
+    { "src": "/", "dest": "/index.php" }
+  ]
+}
