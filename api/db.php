@@ -1,13 +1,65 @@
 <?php
-// GanjiSmart – DB Connection (Final Railway Config)
+// GanjiSmart – DB Connection & Session Engine
 
-// 1. Session Security & Persistence for Vercel
-if (session_status() === PHP_SESSION_NONE) {
-    // Serverless environments need a writable temp directory for sessions
+// 1. Database Credentials
+$host = getenv('DB_HOST') ?: 'shuttle.proxy.rlwy.net';
+$user = getenv('DB_USER') ?: 'root';
+$pass = getenv('DB_PASS') ?: 'buxkvoIlogKqjkDEMoFtERKKhMjldCwe';
+$name = getenv('DB_NAME') ?: 'railway';
+$port = (int)(getenv('DB_PORT') ?: 53870);
+
+// 2. Initial Connection (needed for session handler)
+mysqli_report(MYSQLI_REPORT_OFF);
+$conn = mysqli_init();
+$conn->options(MYSQLI_OPT_CONNECT_TIMEOUT, 10);
+@$conn->real_connect($host, $user, $pass, $name, $port);
+
+if ($conn->connect_error) {
     if (getenv('VERCEL')) {
-        session_save_path('/tmp');
+        header('Content-Type: application/json');
+        http_response_code(500);
+        die(json_encode(['error' => 'DB Disconnected', 'hint' => 'Check Railway/Vercel Env Vars']));
     }
-    
+}
+$conn->set_charset('utf8mb4');
+
+// 3. Database-Back Session Handler (Fix for Vercel Loop)
+class DatabaseSessionHandler implements SessionHandlerInterface {
+    private $db;
+    public function __construct($db) { $this->db = $db; }
+    public function open($path, $name): bool { return true; }
+    public function close(): bool { return true; }
+    public function read($id): string {
+        $stmt = $this->db->prepare("SELECT data FROM sessions WHERE id = ?");
+        $stmt->bind_param("s", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($row = $result->fetch_assoc()) return $row['data'];
+        return "";
+    }
+    public function write($id, $data): bool {
+        $access = time();
+        $stmt = $this->db->prepare("REPLACE INTO sessions (id, data, last_access) VALUES (?, ?, ?)");
+        $stmt->bind_param("ssi", $id, $data, $access);
+        return $stmt->execute();
+    }
+    public function destroy($id): bool {
+        $stmt = $this->db->prepare("DELETE FROM sessions WHERE id = ?");
+        $stmt->bind_param("s", $id);
+        return $stmt->execute();
+    }
+    public function gc($maxlifetime): int|false {
+        $old = time() - $maxlifetime;
+        $stmt = $this->db->prepare("DELETE FROM sessions WHERE last_access < ?");
+        $stmt->bind_param("i", $old);
+        $stmt->execute();
+        return $stmt->affected_rows;
+    }
+}
+
+if (session_status() === PHP_SESSION_NONE) {
+    $handler = new DatabaseSessionHandler($conn);
+    session_set_save_handler($handler, true);
     session_set_cookie_params([
         'lifetime' => 86400,
         'path' => '/',
@@ -17,32 +69,4 @@ if (session_status() === PHP_SESSION_NONE) {
     ]);
     session_start();
 }
-
-// 2. Database Credentials
-$host = getenv('DB_HOST') ?: 'shuttle.proxy.rlwy.net';
-$user = getenv('DB_USER') ?: 'root';
-$pass = getenv('DB_PASS') ?: 'buxkvoIlogKqjkDEMoFtERKKhMjldCwe';
-$name = getenv('DB_NAME') ?: 'railway';
-$port = (int)(getenv('DB_PORT') ?: 53870);
-
-// 3. MySQL Connection
-mysqli_report(MYSQLI_REPORT_OFF);
-$conn = mysqli_init();
-$conn->options(MYSQLI_OPT_CONNECT_TIMEOUT, 10);
-
-@$conn->real_connect($host, $user, $pass, $name, $port);
-
-if ($conn->connect_error) {
-    if (getenv('VERCEL')) {
-        header('Content-Type: application/json');
-        http_response_code(500);
-        die(json_encode([
-            'error' => 'Partner logic disconnected',
-            'hint' => 'Chief, ensure the Railway DB is active and Vercel Env Vars match.',
-            'debug' => $conn->connect_error
-        ]));
-    }
-}
-
-$conn->set_charset('utf8mb4');
 ?>

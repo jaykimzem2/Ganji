@@ -153,6 +153,13 @@ CREATE TABLE IF NOT EXISTS monthly_snapshots (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+-- Sessions table for serverless persistence
+CREATE TABLE IF NOT EXISTS sessions (
+    id VARCHAR(128) PRIMARY KEY,
+    data TEXT NOT NULL,
+    last_access INT NOT NULL
+);
+
 -- Sample demo user
 INSERT INTO users (username, email, password_hash, full_name, total_capital, available_capital, monthly_income, currency) 
 VALUES ('demo', 'demo@ganjismart.ai', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Demo Chief', 10000.00, 6000.00, 5000.00, 'USD')
