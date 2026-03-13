@@ -14,12 +14,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         if ($username && $password) {
             $stmt = $conn->prepare("SELECT id, username, full_name, password_hash FROM users WHERE username = ? OR email = ?");
-            $stmt->bind_param("ss", $username, $username);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $user = $result->fetch_assoc();
+            if (!$stmt) {
+                $error = "System error: The 'users' table is missing. Chief, did you import the schema.sql?";
+            } else {
+                $stmt->bind_param("ss", $username, $username);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $user = $result->fetch_assoc();
+            }
             
-            if ($user && password_verify($password, $user['password_hash'])) {
+            if (!$error && $user && password_verify($password, $user['password_hash'])) {
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['full_name'] = $user['full_name'];
@@ -42,10 +46,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($full_name && $username && $email && $password) {
             $hash = password_hash($password, PASSWORD_DEFAULT);
             $stmt = $conn->prepare("INSERT INTO users (full_name, username, email, password_hash, total_capital, available_capital, monthly_income) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            $avail = $capital * 0.4;
-            $stmt->bind_param("ssssddd", $full_name, $username, $email, $hash, $capital, $avail, $income);
+            if (!$stmt) {
+                $error = "Registration failed: Database tables not found. Run schema.sql on Railway.";
+            } else {
+                $avail = $capital * 0.4;
+                $stmt->bind_param("ssssddd", $full_name, $username, $email, $hash, $capital, $avail, $income);
+                $reg_success = $stmt->execute();
+            }
             
-            if ($stmt->execute()) {
+            if (!$error && $reg_success) {
                 $new_id = $conn->insert_id;
                 $stmt2 = $conn->prepare("INSERT INTO capital_allocations (user_id) VALUES (?)");
                 $stmt2->bind_param("i", $new_id);
