@@ -153,6 +153,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button type="submit" class="btn-primary">Enter the Brain</button>
             <div class="demo-hint">Demo: <b>demo</b> / <b>password</b></div>
         </form>
+        <?php if (isset($_GET['debug'])): ?>
+        <div style="font-size:10px; color:rgba(255,255,255,0.2); margin-top:20px; border-top:1px solid rgba(255,255,255,0.05); padding-top:10px;">
+            Session ID: <?= session_id() ?><br>
+            User ID: <?= $_SESSION['user_id'] ?? 'none' ?><br>
+            Path: <?= ini_get('session.save_path') ?><br>
+            Cookie: <?= $_COOKIE[session_name()] ?? 'none' ?>
+        </div>
+        <?php endif; ?>
 
         <form method="POST" id="register-form" style="display:none;">
             <input type="hidden" name="action" value="register">
