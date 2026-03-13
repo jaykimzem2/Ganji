@@ -246,6 +246,7 @@ if ($errorCount === 0) {
     echo "<p>$successCount operations successful.</p>";
     echo "<p><b>Demo Account Ready:</b> demo / password</p>";
     echo "<a href='login' style='padding:10px 20px; background:#6c63ff; color:#fff; text-decoration:none; border-radius:8px;'>Go to Login →</a>";
+    session_destroy();
 } else {
     echo "<h3>⚠️ Setup finished with $errorCount errors.</h3>";
     echo "<p>Most likely some tables already existed. Try logging in.</p>";
