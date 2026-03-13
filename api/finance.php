@@ -1,7 +1,7 @@
 <?php
-session_start();
+
 require_once 'db.php';
-if (!isset($_SESSION['user_id'])) { header('Location: login.php'); exit; }
+if (!isset($_SESSION['user_id'])) { header('Location: /'); exit; }
 $uid = $_SESSION['user_id'];
 $user = $conn->query("SELECT * FROM users WHERE id = $uid")->fetch_assoc();
 
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $conn->query("UPDATE users SET monthly_income = monthly_income + $amount WHERE id = $uid");
         }
         
-        header('Location: finance.php?added=1');
+        header("Location: /finance?added=1");
         exit;
     }
 }

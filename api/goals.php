@@ -1,7 +1,7 @@
 <?php
-session_start();
+
 require_once 'db.php';
-if (!isset($_SESSION['user_id'])) { header('Location: login.php'); exit; }
+if (!isset($_SESSION['user_id'])) { header('Location: /'); exit; }
 $uid = $_SESSION['user_id'];
 $user = $conn->query("SELECT * FROM users WHERE id = $uid")->fetch_assoc();
 
@@ -17,14 +17,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $conn->prepare("INSERT INTO goals (user_id, title, description, target_amount, current_amount, target_date, priority) VALUES (?,?,?,?,?,?,?)");
         $stmt->bind_param("issddss", $uid, $title, $desc, $target, $current, $date, $priority);
         $stmt->execute();
-        header('Location: goals.php?added=1');
+        header("Location: /goals?added=1");
         exit;
     }
     if ($action === 'add_funds') {
         $goal_id = (int)$_POST['goal_id'];
         $amount = floatval($_POST['amount']);
         $conn->query("UPDATE goals SET current_amount = current_amount + $amount WHERE id=$goal_id AND user_id=$uid");
-        header('Location: goals.php?funded=1');
+        header("Location: /goals?funded=1");
         exit;
     }
 }

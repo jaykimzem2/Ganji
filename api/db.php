@@ -1,5 +1,16 @@
 <?php
 // GanjiSmart – DB Connection (Final Railway Config)
+if (session_status() === PHP_SESSION_NONE) {
+    session_set_cookie_params([
+        'lifetime' => 86400,
+        'path' => '/',
+        'domain' => '',
+        'secure' => true,
+        'httponly' => true,
+        'samesite' => 'Lax'
+    ]);
+    session_start();
+}
 
 $host = getenv('DB_HOST') ?: 'shuttle.proxy.rlwy.net';
 $user = getenv('DB_USER') ?: 'root';

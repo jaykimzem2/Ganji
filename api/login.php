@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 require_once 'db.php';
 
 $error = '';
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['user_id'] = $user['id'];
                     $_SESSION['username'] = $user['username'];
                     $_SESSION['full_name'] = $user['full_name'];
-                    header('Location: dashboard.php');
+                    header('Location: /dashboard');
                     exit;
                 } else {
                     $error = "Bro, those credentials don't match our records.";

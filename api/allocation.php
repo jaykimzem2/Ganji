@@ -1,7 +1,7 @@
 <?php
-session_start();
+
 require_once 'db.php';
-if (!isset($_SESSION['user_id'])) { header('Location: login.php'); exit; }
+if (!isset($_SESSION['user_id'])) { header('Location: /'); exit; }
 $uid = $_SESSION['user_id'];
 $user = $conn->query("SELECT * FROM users WHERE id = $uid")->fetch_assoc();
 $alloc = $conn->query("SELECT * FROM capital_allocations WHERE user_id = $uid")->fetch_assoc();
@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $conn->prepare("UPDATE capital_allocations SET essentials_pct=?, savings_pct=?, investments_pct=?, tithe_pct=?, discretionary_pct=? WHERE user_id=?");
             $stmt->bind_param("dddddi", $e, $s, $inv, $t, $d, $uid);
             $stmt->execute();
-            header('Location: allocation.php?saved=1');
+            header("Location: /allocation?saved=1");
         } else {
             $error = "Chief, percentages must total 100%. Currently: $total%";
         }
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $capital = floatval($_POST['total_capital']);
         $currency = $_POST['currency'];
         $conn->query("UPDATE users SET monthly_income=$income, total_capital=$capital, currency='$currency' WHERE id=$uid");
-        header('Location: allocation.php?income_saved=1');
+        header("Location: /allocation?income_saved=1");
         exit;
     }
 }

@@ -1,16 +1,16 @@
 <?php
 $current_page = basename($_SERVER['PHP_SELF'], '.php');
 $nav = [
-    ['id'=>'dashboard',     'icon'=>'🏠', 'label'=>'Home',       'url'=>'dashboard.php'],
-    ['id'=>'finance',       'icon'=>'💳', 'label'=>'My Money',   'url'=>'finance.php'],
-    ['id'=>'goals',         'icon'=>'🎯', 'label'=>'Goals',      'url'=>'goals.php'],
-    ['id'=>'opportunities', 'icon'=>'📈', 'label'=>'Invest',     'url'=>'opportunities.php'],
-    ['id'=>'trades',        'icon'=>'🗂️', 'label'=>'History',   'url'=>'trades.php'],
+    ['id'=>'dashboard',     'icon'=>'🏠', 'label'=>'Home',       'url'=>'/'],
+    ['id'=>'finance',       'icon'=>'💳', 'label'=>'My Money',   'url'=>'/'],
+    ['id'=>'goals',         'icon'=>'🎯', 'label'=>'Goals',      'url'=>'/'],
+    ['id'=>'opportunities', 'icon'=>'📈', 'label'=>'Invest',     'url'=>'/'],
+    ['id'=>'trades',        'icon'=>'🗂️', 'label'=>'History',   'url'=>'/'],
 ];
 $more_nav = [
-    ['id'=>'allocation',    'icon'=>'🏛️', 'label'=>'Allocation','url'=>'allocation.php'],
-    ['id'=>'notifications', 'icon'=>'🔔', 'label'=>'Alerts',    'url'=>'notifications.php'],
-    ['id'=>'settings',      'icon'=>'⚙️', 'label'=>'Settings',  'url'=>'settings.php'],
+    ['id'=>'allocation',    'icon'=>'🏛️', 'label'=>'Allocation','url'=>'/'],
+    ['id'=>'notifications', 'icon'=>'🔔', 'label'=>'Alerts',    'url'=>'/'],
+    ['id'=>'settings',      'icon'=>'⚙️', 'label'=>'Settings',  'url'=>'/'],
 ];
 $all_nav = array_merge($nav, $more_nav);
 ?>
@@ -18,7 +18,7 @@ $all_nav = array_merge($nav, $more_nav);
 <!-- Desktop Sidebar -->
 <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
-        <a href="dashboard.php" class="sidebar-logo">
+        <a href="/dashboard" class="sidebar-logo">
             <img src="/assets/icons/icon-192.png" alt="GanjiSmart" class="logo-img">
             <div>
                 <div class="logo-text">GanjiSmart</div>
@@ -44,13 +44,13 @@ $all_nav = array_merge($nav, $more_nav);
         </a>
         <?php endforeach; ?>
 
-        <a href="logout.php" class="nav-item mt-4" style="color:var(--rose);">
+        <a href="/logout" class="nav-item mt-4" style="color:var(--rose);">
             <span class="nav-icon">🚪</span> Logout
         </a>
     </nav>
 
     <div class="sidebar-footer">
-        <div class="user-card" onclick="location.href='settings.php'">
+        <div class="user-card" onclick="location.href='/settings'">
             <div class="user-avatar">👤</div>
             <div>
                 <div class="user-name"><?= htmlspecialchars($_SESSION['full_name'] ?? $_SESSION['username'] ?? 'Chief') ?></div>
@@ -69,3 +69,4 @@ $all_nav = array_merge($nav, $more_nav);
     </a>
     <?php endforeach; ?>
 </nav>
+

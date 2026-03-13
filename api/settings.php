@@ -1,7 +1,7 @@
 <?php
-session_start();
+
 require_once 'db.php';
-if (!isset($_SESSION['user_id'])) { header('Location: login.php'); exit; }
+if (!isset($_SESSION['user_id'])) { header('Location: /'); exit; }
 $uid = $_SESSION['user_id'];
 $user = $conn->query("SELECT * FROM users WHERE id = $uid")->fetch_assoc();
 $alloc = $conn->query("SELECT * FROM capital_allocations WHERE user_id = $uid")->fetch_assoc();
@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("ssi", $name, $persona, $uid);
         $stmt->execute();
         $_SESSION['full_name'] = $name;
-        header('Location: settings.php?saved=1');
+        header("Location: /settings?saved=1");
         exit;
     }
     if ($action === 'change_password') {
@@ -26,9 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $conn->prepare("UPDATE users SET password_hash=? WHERE id=?");
             $stmt->bind_param("si", $hash, $uid);
             $stmt->execute();
-            header('Location: settings.php?pw_changed=1');
+            header("Location: /settings?pw_changed=1");
         } else {
-            header('Location: settings.php?pw_error=1');
+            header("Location: /settings?pw_error=1");
         }
         exit;
     }

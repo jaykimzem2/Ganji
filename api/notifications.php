@@ -1,7 +1,7 @@
 <?php
-session_start();
+
 require_once 'db.php';
-if (!isset($_SESSION['user_id'])) { header('Location: login.php'); exit; }
+if (!isset($_SESSION['user_id'])) { header('Location: /'); exit; }
 $uid = $_SESSION['user_id'];
 $user = $conn->query("SELECT * FROM users WHERE id = $uid")->fetch_assoc();
 
