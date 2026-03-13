@@ -1,16 +1,16 @@
 <?php
 $current_page = basename($_SERVER['PHP_SELF'], '.php');
 $nav = [
-    ['id'=>'dashboard',     'icon'=>'🏠', 'label'=>'Home',       'url'=>'/'],
-    ['id'=>'finance',       'icon'=>'💳', 'label'=>'My Money',   'url'=>'/'],
-    ['id'=>'goals',         'icon'=>'🎯', 'label'=>'Goals',      'url'=>'/'],
-    ['id'=>'opportunities', 'icon'=>'📈', 'label'=>'Invest',     'url'=>'/'],
-    ['id'=>'trades',        'icon'=>'🗂️', 'label'=>'History',   'url'=>'/'],
+    ['id'=>'dashboard',     'icon'=>'🏠', 'label'=>'Home',       'url'=>'/dashboard'],
+    ['id'=>'finance',       'icon'=>'💳', 'label'=>'My Money',   'url'=>'/finance'],
+    ['id'=>'goals',         'icon'=>'🎯', 'label'=>'Goals',      'url'=>'/goals'],
+    ['id'=>'opportunities', 'icon'=>'📈', 'label'=>'Invest',     'url'=>'/opportunities'],
+    ['id'=>'trades',        'icon'=>'🗂️', 'label'=>'History',   'url'=>'/trades'],
 ];
 $more_nav = [
-    ['id'=>'allocation',    'icon'=>'🏛️', 'label'=>'Allocation','url'=>'/'],
-    ['id'=>'notifications', 'icon'=>'🔔', 'label'=>'Alerts',    'url'=>'/'],
-    ['id'=>'settings',      'icon'=>'⚙️', 'label'=>'Settings',  'url'=>'/'],
+    ['id'=>'allocation',    'icon'=>'🏛️', 'label'=>'Allocation','url'=>'/allocation'],
+    ['id'=>'notifications', 'icon'=>'🔔', 'label'=>'Alerts',    'url'=>'/notifications'],
+    ['id'=>'settings',      'icon'=>'⚙️', 'label'=>'Settings',  'url'=>'/settings'],
 ];
 $all_nav = array_merge($nav, $more_nav);
 ?>
@@ -69,4 +69,3 @@ $all_nav = array_merge($nav, $more_nav);
     </a>
     <?php endforeach; ?>
 </nav>
-
