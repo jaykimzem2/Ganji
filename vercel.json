@@ -2,16 +2,15 @@
   "functions": {
     "api/*.php": {
       "runtime": "vercel-php@0.7.2"
-    },
-    "*.php": {
-      "runtime": "vercel-php@0.7.2"
     }
   },
   "routes": [
     { "src": "/assets/(.*)", "dest": "/assets/$1" },
     { "src": "/manifest.json", "dest": "/manifest.json" },
     { "src": "/sw.js", "dest": "/sw.js" },
-    { "src": "/(index|dashboard|finance|goals|opportunities|trades|login|logout|notifications|settings|allocation|analysis)\\.php", "dest": "/$1.php" },
-    { "src": "/", "dest": "/index.php" }
+    { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "src": "/(login|logout|dashboard|finance|goals|opportunities|trades|settings|allocation|notifications|analysis)", "dest": "/api/$1.php" },
+    { "src": "/(.*).php", "dest": "/api/$1.php" },
+    { "src": "/", "dest": "/api/index.php" }
   ]
 }

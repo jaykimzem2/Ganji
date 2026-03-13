@@ -23,7 +23,7 @@ $total = $conn->query("SELECT COUNT(*) as c FROM notifications WHERE user_id=$ui
     <title>Notifications – GanjiSmart</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
 </head>
 <body>
 <div class="app-layout">
@@ -86,6 +86,6 @@ $total = $conn->query("SELECT COUNT(*) as c FROM notifications WHERE user_id=$ui
 </div>
 
 <div id="notif-stack" style="position:fixed;top:80px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px;max-width:400px;"></div>
-<script src="assets/js/app.js"></script>
+<script src="/assets/js/app.js"></script>
 </body>
 </html>

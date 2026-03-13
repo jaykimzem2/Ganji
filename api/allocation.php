@@ -58,7 +58,7 @@ $years = [1, 3, 5, 10, 15, 20];
     <title>Capital Allocation – GanjiSmart</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
@@ -244,7 +244,7 @@ $years = [1, 3, 5, 10, 15, 20];
 </div>
 
 <div id="notif-stack" style="position:fixed;top:80px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px;max-width:400px;"></div>
-<script src="assets/js/app.js"></script>
+<script src="/assets/js/app.js"></script>
 <script>
 const income = <?= $user['monthly_income'] ?>;
 const allocKeys = ['essentials', 'savings', 'investments', 'tithe', 'discretionary'];

@@ -19,7 +19,7 @@ $all_nav = array_merge($nav, $more_nav);
 <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
         <a href="dashboard.php" class="sidebar-logo">
-            <img src="assets/icons/icon-192.png" alt="GanjiSmart" class="logo-img">
+            <img src="/assets/icons/icon-192.png" alt="GanjiSmart" class="logo-img">
             <div>
                 <div class="logo-text">GanjiSmart</div>
                 <div class="logo-sub">FINANCIAL PARTNER</div>

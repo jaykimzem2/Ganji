@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>GanjiSmart – AI Financial Brain</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
     <style>
         body { background: #050814; display: flex; align-items: center; justify-content: center; min-height: 100vh; overflow: hidden; }
         .login-bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
@@ -128,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="login-card">
         <div class="brand">
             <div class="brand-logo">
-                <img src="assets/icons/icon-512.png" alt="GanjiSmart" class="brand-img">
+                <img src="/assets/icons/icon-512.png" alt="GanjiSmart" class="brand-img">
             </div>
             <div class="brand-name">GanjiSmart</div>
             <div class="brand-tagline">AI Financial Brain • Global Markets</div>
