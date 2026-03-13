@@ -5,6 +5,11 @@ require_once 'db.php';
 $error = '';
 $success = '';
 
+if (isset($_SESSION['user_id'])) {
+    header('Location: /dashboard');
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? 'login';
     
