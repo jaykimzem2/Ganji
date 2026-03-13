@@ -9,6 +9,7 @@
     { "src": "/manifest.json", "dest": "/manifest.json" },
     { "src": "/sw.js", "dest": "/sw.js" },
     { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "src": "/setup_db", "dest": "/api/setup_db.php" },
     { "src": "/(login|logout|dashboard|finance|goals|opportunities|trades|settings|allocation|notifications|analysis)", "dest": "/api/$1.php" },
     { "src": "/(.*).php", "dest": "/api/$1.php" },
     { "src": "/", "dest": "/api/index.php" }
