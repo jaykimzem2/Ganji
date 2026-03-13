@@ -5,9 +5,7 @@ require_once 'db.php';
 echo "<h2>🧠 GanjiSmart DB Setup</h2>";
 
 $sql = <<<'SQL'
--- GanjiSmart Database Schema
-CREATE DATABASE IF NOT EXISTS ganjismart CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE ganjismart;
+-- GanjiSmart Database Schema (Railway Context)
 
 -- Users table
 CREATE TABLE IF NOT EXISTS users (
