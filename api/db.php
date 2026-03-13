@@ -1,22 +1,19 @@
 <?php
 // GanjiSmart – DB Connection
 // Support for both Local XAMPP and Remote Serverless (Vercel)
+// Updated for Railway deployment
 
-$host = getenv('DB_HOST') ?: 'localhost';
+$host = getenv('DB_HOST') ?: 'shuttle.proxy.rlwy.net';
 $user = getenv('DB_USER') ?: 'root';
-$pass = getenv('DB_PASS') ?: '';
-$name = getenv('DB_NAME') ?: 'ganjismart';
-
-// For cloud databases that require SSL (like PlanetScale or Tidb)
-$conn = mysqli_init();
-if (getenv('DB_SSL')) {
-    $conn->ssl_set(NULL, NULL, NULL, NULL, NULL);
-}
+$pass = getenv('DB_PASS') ?: 'buxkvoIlogKqjkDEMoFtERKKhMjldCwe';
+$name = getenv('DB_NAME') ?: 'railway'; // Railway default DB name is often 'railway' or the project name
+$port = getenv('DB_PORT') ?: 47648; // Common railway port, if not provided it might fail
 
 // Suppress error reporting for constructors to catch exceptions manually
 mysqli_report(MYSQLI_REPORT_OFF);
 
-$conn->real_connect($host, $user, $pass, $name);
+$conn = mysqli_init();
+$conn->real_connect($host, $user, $pass, $name, $port);
 
 if ($conn->connect_error) {
     header('Content-Type: application/json');
