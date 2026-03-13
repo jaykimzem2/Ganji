@@ -4,7 +4,7 @@ require_once 'db.php';
 
 echo "<h2>🧠 GanjiSmart DB Setup</h2>";
 
-$sql = file_get_contents('schema.sql');
+$sql = @file_get_contents(__DIR__ . '/schema.sql');
 if (!$sql) {
     die("❌ Error: Could not find schema.sql");
 }
