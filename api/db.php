@@ -31,6 +31,7 @@ class DatabaseSessionHandler implements SessionHandlerInterface {
     public function close(): bool { return true; }
     public function read($id): string {
         $stmt = $this->db->prepare("SELECT data FROM sessions WHERE id = ?");
+        if (!$stmt) return "";
         $stmt->bind_param("s", $id);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -40,17 +41,20 @@ class DatabaseSessionHandler implements SessionHandlerInterface {
     public function write($id, $data): bool {
         $access = time();
         $stmt = $this->db->prepare("REPLACE INTO sessions (id, data, last_access) VALUES (?, ?, ?)");
+        if (!$stmt) return false;
         $stmt->bind_param("ssi", $id, $data, $access);
         return $stmt->execute();
     }
     public function destroy($id): bool {
         $stmt = $this->db->prepare("DELETE FROM sessions WHERE id = ?");
+        if (!$stmt) return false;
         $stmt->bind_param("s", $id);
         return $stmt->execute();
     }
     public function gc($maxlifetime): int|false {
         $old = time() - $maxlifetime;
         $stmt = $this->db->prepare("DELETE FROM sessions WHERE last_access < ?");
+        if (!$stmt) return false;
         $stmt->bind_param("i", $old);
         $stmt->execute();
         return $stmt->affected_rows;
